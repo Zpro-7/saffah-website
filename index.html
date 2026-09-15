@@ -3,48 +3,445 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saffah - Prayer Times & Schedule</title>
+  <title>Saffah — Modern Prayer Timetables & Mosque Jamaat Tracking</title>
+  <meta name="description" content="Accurate astronomical prayer timetables, dynamic mosque jamaat schedules, full-screen notifications, and customizable calculation methods." />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-    header { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 24px; margin-bottom: 40px; }
-    h1 { margin-bottom: 8px; }
-    h2 { margin-top: 32px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
-    nav a { margin: 0 12px; color: #0066cc; text-decoration: none; font-weight: 500; }
-    nav a:hover { text-decoration: underline; }
-    footer { margin-top: 60px; font-size: 0.9em; color: #777; border-top: 1px solid #eee; padding-top: 20px; text-align: center; }
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --accent: #14b8a6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--border);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #0b1329;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+
+    /* Interactive Preview Card */
+    .preview-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      max-width: 440px;
+      margin: 0 auto 80px;
+      padding: 24px;
+      text-align: left;
+    }
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .location-pill {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .prayer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      background: #f8fafc;
+      border: 1px solid transparent;
+    }
+    .prayer-row.active {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .prayer-name { font-weight: 600; font-size: 0.95rem; }
+    .prayer-times { text-align: right; }
+    .prayer-start { font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
+    .jamat-tag { font-size: 0.75rem; color: var(--text-muted); display: block; }
+
+    /* Features Grid */
+    .features {
+      padding: 40px 0 80px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+      padding: 48px 0;
+      margin-top: 40px;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-left: 20px;
+    }
+    .footer-links a:hover { color: var(--primary); }
+
+    /* Policy Modals / Legal Sections */
+    .legal-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .legal-modal:target { display: flex; }
+    .modal-content {
+      background: white;
+      max-width: 680px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 36px;
+      border-radius: var(--radius-lg);
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .modal-content h2 { margin-bottom: 12px; font-size: 1.6rem; color: var(--text-main); }
+    .modal-content h3 { margin-top: 20px; margin-bottom: 8px; font-size: 1.1rem; }
+    .modal-content p, .modal-content ul { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .modal-content ul { padding-left: 20px; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero p { font-size: 1rem; }
+      .footer-content { flex-direction: column; text-align: center; }
+      .footer-links a { margin: 0 10px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Navigation -->
   <header>
-    <h1>Saffah</h1>
-    <p>Accurate prayer times, notifications, and utilities.</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#privacy">Privacy Policy</a>
-      <a href="#terms">Terms of Service</a>
-    </nav>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <span>🕌</span> Saffah
+        </a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+        </div>
+      </nav>
+    </div>
   </header>
 
-  <section id="about">
-    <h2>About Saffah</h2>
-    <p>Saffah is an Android application designed to provide accurate local prayer timetables and automated reminder notifications.</p>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">Pure, Ad-Free Prayer Companion</div>
+      <h1>Quiet, Accurate & Focused Prayer Times</h1>
+      <p>Astronomical calculations, auto-updating mosque Jamaat offsets, full-screen notification wakeups, and cloud sync built for Android.</p>
+
+      <!-- App Mockup UI -->
+      <div class="preview-card">
+        <div class="preview-header">
+          <div class="location-pill">📍 Mumbai, Maharashtra</div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: #16a34a; background: #dcfce7; padding: 3px 8px; border-radius: 6px;">Hanafi / MWL</span>
+        </div>
+
+        <div class="prayer-row">
+          <span class="prayer-name">Fajr</span>
+          <div class="prayer-times">
+            <span class="prayer-start">5:12 AM</span>
+            <span class="jamat-tag">Jamaat 5:30 AM</span>
+          </div>
+        </div>
+        <div class="prayer-row">
+          <span class="prayer-name">Dhuhr</span>
+          <div class="prayer-times">
+            <span class="prayer-start">12:38 PM</span>
+            <span class="jamat-tag">Jamaat 1:15 PM</span>
+          </div>
+        </div>
+        <div class="prayer-row active">
+          <span class="prayer-name" style="color: #15803d;">Asr (Current)</span>
+          <div class="prayer-times">
+            <span class="prayer-start" style="color: #15803d;">5:01 PM</span>
+            <span class="jamat-tag" style="color: #16a34a; font-weight: 600;">Jamaat 5:15 PM</span>
+          </div>
+        </div>
+        <div class="prayer-row">
+          <span class="prayer-name">Maghrib</span>
+          <div class="prayer-times">
+            <span class="prayer-start">6:42 PM</span>
+            <span class="jamat-tag">Jamaat 6:49 PM (+7m)</span>
+          </div>
+        </div>
+        <div class="prayer-row">
+          <span class="prayer-name">Isha</span>
+          <div class="prayer-times">
+            <span class="prayer-start">7:58 PM</span>
+            <span class="jamat-tag">Jamaat 8:30 PM</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="privacy">
-    <h2>Privacy Policy</h2>
-    <p><strong>Last Updated:</strong> September 2026</p>
-    <p>Saffah respects your privacy. When you sign in with Google, we access basic profile details (email and display name) strictly to authenticate and sync your settings. We do not sell or share personal data with third parties.</p>
-    <p>Location permissions, if granted, run locally on your device to calculate accurate timetable schedules and are not stored externally.</p>
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Engineered for Precision & Peace of Mind</h2>
+      </div>
+
+      <div class="grid">
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h3>Dynamic Mosque Jamaat</h3>
+          <p>Set a mosque Jamaat time once. Saffah calculates and shifts dynamic offsets automatically every day as twilight changes.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Full-Screen Wakeup Alarms</h3>
+          <p>Never miss Fajr again. High-priority full-screen alerts display prayer details and play your selected Azan audio reliably over Doze mode.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h3>Jurisprudence Support</h3>
+          <p>Switch easily between Hanafi and Shafi'i/Hanbali/Ahl-e-Hadith calculations with trusted astronomical angle parameters (MWL, Umm al-Qura, Karachi).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">☁️</div>
+          <h3>Seamless Google Sign-In</h3>
+          <p>Authenticate with one tap via Android Credential Manager to backup and restore custom mosque lists and audio preferences securely.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Privacy-First Architecture</h3>
+          <p>Your GPS coordinates stay on your device for local calculations. No ad tracking, no profiling, and no third-party data sharing.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎧</div>
+          <h3>Cached Offline Azan Audio</h3>
+          <p>Choose high-fidelity Azan recitations (Makkah, Madinah, Al-Aqsa) that cache locally so your alerts fire even without an active data connection.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="terms">
-    <h2>Terms of Service</h2>
-    <p><strong>Last Updated:</strong> September 2026</p>
-    <p>By using Saffah, you agree to these terms. Saffah is provided "as is" without warranty of any kind. You agree not to reverse engineer or abuse the services.</p>
-  </section>
-
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 Saffah. Contact: iamzishank@gmail.com</p>
+    <div class="container footer-content">
+      <p>&copy; 2026 Saffah. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="mailto:iamzishank@gmail.com">Contact Support</a>
+      </div>
+    </div>
   </footer>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy" class="legal-modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Privacy Policy</h2>
+      <p><strong>Effective Date:</strong> September 14, 2026</p>
+      <p>Saffah ("we", "our", or "the App") respects your privacy. This policy explains how we collect and use information when you use the Saffah mobile application.</p>
+      
+      <h3>1. Information We Collect</h3>
+      <ul>
+        <li><strong>Google Account Information:</strong> When signing in with Google, we access basic profile information (email address and name) solely to authenticate you and sync your preferences.</li>
+        <li><strong>Location Data:</strong> Saffah accesses device coordinates to calculate accurate local prayer timetables. All astronomical calculations occur locally on your device.</li>
+      </ul>
+
+      <h3>2. Data Sharing</h3>
+      <p>We do not sell, rent, or trade your personal data with third parties or advertisers.</p>
+
+      <h3>3. Contact</h3>
+      <p>If you have questions regarding this Privacy Policy, reach out to: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="terms" class="legal-modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Terms of Service</h2>
+      <p><strong>Effective Date:</strong> September 14, 2026</p>
+      <p>By using the Saffah mobile application, you agree to these Terms of Service.</p>
+      
+      <h3>1. Use of Service</h3>
+      <p>Saffah is provided as a prayer calculation and scheduling utility. You agree to use the service in compliance with all applicable laws and regulations.</p>
+
+      <h3>2. Disclaimer of Warranties</h3>
+      <p>The app is provided on an "AS IS" and "AS AVAILABLE" basis. While mathematical algorithms strive for high precision, we do not guarantee uninterrupted background execution on all device battery-saver configurations.</p>
+
+      <h3>3. Account Security</h3>
+      <p>You are responsible for keeping your Google account credentials secure. You can revoke authentication access at any time through your Google Security Settings.</p>
+
+      <h3>4. Contact</h3>
+      <p>For inquiries, please contact: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
+    </div>
+  </div>
+
 </body>
 </html>
