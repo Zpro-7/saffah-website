@@ -6,6 +6,10 @@
   <title>Saffah — Prayer Timetables, Calculations & Holy Quran</title>
   <meta name="description" content="Astronomical prayer timetables, multiple calculation methods including Karachi University, Iftar timings, and the Holy Quran with audio recitation." />
 
+  <!-- Favicon / App Icon -->
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +48,7 @@
 
     /* Navbar */
     header {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
@@ -59,12 +63,21 @@
     }
     .logo {
       font-weight: 800;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--primary);
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+    }
+    .brand-img {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      display: block;
     }
     .nav-links a {
       color: var(--text-muted);
@@ -107,7 +120,7 @@
       margin: 0 auto 36px;
     }
 
-    /* Interactive Preview Card */
+    /* Timetable Preview Card */
     .preview-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -152,6 +165,29 @@
     }
     .prayer-name { font-weight: 600; font-size: 0.95rem; }
     .prayer-start { font-weight: 700; font-size: 1rem; color: var(--text-main); }
+
+    /* Calculation Methods Section */
+    .methods-section {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0;
+      margin-bottom: 40px;
+    }
+    .methods-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .method-item {
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .method-item strong { display: block; margin-bottom: 4px; color: var(--primary-dark); }
+    .method-item span { font-size: 0.85rem; color: var(--text-muted); }
 
     /* Features Grid */
     .features {
@@ -203,29 +239,6 @@
       color: var(--text-muted);
       font-size: 0.95rem;
     }
-
-    /* Calculation Methods Section */
-    .methods-section {
-      background: white;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 60px 0;
-      margin-bottom: 40px;
-    }
-    .methods-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .method-item {
-      padding: 16px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-    }
-    .method-item strong { display: block; margin-bottom: 4px; color: var(--primary-dark); }
-    .method-item span { font-size: 0.85rem; color: var(--text-muted); }
 
     /* Footer */
     footer {
@@ -301,10 +314,11 @@
     <div class="container">
       <nav>
         <a href="#" class="logo">
-          <span>📖</span> Saffah
+          <img src="logo.png" alt="Saffah Logo" class="brand-img" />
+          <span>Saffah</span>
         </a>
         <div class="nav-links">
-          <a href="#methods">Calculation Methods</a>
+          <a href="#methods">Methods</a>
           <a href="#features">Features</a>
           <a href="#privacy">Privacy</a>
           <a href="#terms">Terms</a>
@@ -318,7 +332,7 @@
     <div class="container">
       <div class="badge">Pure, Ad-Free Islamic Companion</div>
       <h1>Precise Prayer Timetables & The Holy Quran</h1>
-      <p>Calculated via leading international standards including Karachi University, full Iftar schedules, and an integrated Holy Quran with audio recitations.</p>
+      <p>Astronomical calculations via University of Islamic Sciences Karachi and international methods, full Iftar schedules, and an integrated Holy Quran with audio recitations.</p>
 
       <!-- Prayer Timetable Mockup -->
       <div class="preview-card">
@@ -360,17 +374,17 @@
     <div class="container">
       <div class="section-title" style="margin-bottom: 24px;">
         <h2>Comprehensive Calculation Methods</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Select from recognized Islamic astronomical standards to match your local community guidelines.</p>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Supports recognized Islamic astronomical standards to match your local community guidelines.</p>
       </div>
 
       <div class="methods-list">
         <div class="method-item">
           <strong>Univ. of Islamic Sciences, Karachi</strong>
-          <span>Fajr 18° / Isha 18° — Standard across India, Pakistan, Bangladesh & South Asia.</span>
+          <span>Fajr 18° / Isha 18° — Widely followed across India, Pakistan, and South Asia.</span>
         </div>
         <div class="method-item">
           <strong>Muslim World League (MWL)</strong>
-          <span>Fajr 18° / Isha 17° — Widely adopted internationally and throughout Europe.</span>
+          <span>Fajr 18° / Isha 17° — Standard internationally and across Europe.</span>
         </div>
         <div class="method-item">
           <strong>Umm al-Qura University, Makkah</strong>
@@ -378,7 +392,7 @@
         </div>
         <div class="method-item">
           <strong>Egyptian General Authority of Survey</strong>
-          <span>Fajr 19.5° / Isha 17.5° — Official standard across Egypt, Levant & parts of Africa.</span>
+          <span>Fajr 19.5° / Isha 17.5° — Official standard across Egypt, Levant, and Africa.</span>
         </div>
         <div class="method-item">
           <strong>ISNA (North America)</strong>
@@ -403,37 +417,37 @@
         <div class="feature-card">
           <div class="feature-icon">📖</div>
           <h3>Holy Quran with Audio</h3>
-          <p>Read the complete Quran with clear typography, verse-by-verse audio recitations from world-renowned Qaris, and local offline caching.</p>
+          <p>Read the complete Quran with clear typography, verse-by-verse audio recitations from renowned Qaris, and local offline caching.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🌅</div>
           <h3>Iftar & Sehri Timetables</h3>
-          <p>Accurate daily fast timings with clear countdowns to Sehri end and Maghrib Iftar across both standard and Ramadan schedules.</p>
+          <p>Accurate fast timings with countdowns to Sehri end and Maghrib Iftar across regular and Ramadan schedules.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">📐</div>
           <h3>Custom Madhab Settings</h3>
-          <p>Easily switch Asr calculation methods between Hanafi (2x shadow) and Standard/Shafi'i/Hanbali/Maliki (1x shadow) rules.</p>
+          <p>Toggle Asr calculations between Hanafi (2x shadow) and Standard/Shafi'i/Hanbali/Maliki (1x shadow) rules effortlessly.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🔔</div>
           <h3>Full-Screen Wakeup Alarms</h3>
-          <p>Never miss Fajr again. High-priority full-screen alerts display prayer details reliably over lock screens and battery-saver modes.</p>
+          <p>High-priority full-screen alerts display prayer details reliably over lock screens and battery-saver modes for Fajr.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">☁️</div>
           <h3>Google Sign-In Sync</h3>
-          <p>Seamlessly back up your bookmarks, last-read Quran positions, and prayer calculation settings using secure Google Authentication.</p>
+          <p>Seamlessly back up your bookmarks, last-read Quran positions, and settings using secure Android Credential Manager.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🛡️</div>
           <h3>Privacy-First Design</h3>
-          <p>All prayer angles and GPS coordinates run calculations locally on your phone. No trackers, no data sales, and zero intrusive ads.</p>
+          <p>All prayer angles and GPS coordinates run calculations locally on your phone. No trackers, no data sales, and zero ads.</p>
         </div>
       </div>
     </div>
