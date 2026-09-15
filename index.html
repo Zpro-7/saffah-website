@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saffah — Modern Prayer Timetables & Mosque Jamaat Tracking</title>
-  <meta name="description" content="Accurate astronomical prayer timetables, dynamic mosque jamaat schedules, full-screen notifications, and customizable calculation methods." />
+  <title>Saffah — Prayer Timetables, Calculations & Holy Quran</title>
+  <meta name="description" content="Astronomical prayer timetables, multiple calculation methods including Karachi University, Iftar timings, and the Holy Quran with audio recitation." />
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,7 +103,7 @@
     .hero p {
       font-size: 1.15rem;
       color: var(--text-muted);
-      max-width: 620px;
+      max-width: 680px;
       margin: 0 auto 36px;
     }
 
@@ -146,10 +146,12 @@
       background: #f0fdf4;
       border-color: #86efac;
     }
+    .prayer-row.iftar-highlight {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
     .prayer-name { font-weight: 600; font-size: 0.95rem; }
-    .prayer-times { text-align: right; }
-    .prayer-start { font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
-    .jamat-tag { font-size: 0.75rem; color: var(--text-muted); display: block; }
+    .prayer-start { font-weight: 700; font-size: 1rem; color: var(--text-main); }
 
     /* Features Grid */
     .features {
@@ -202,6 +204,29 @@
       font-size: 0.95rem;
     }
 
+    /* Calculation Methods Section */
+    .methods-section {
+      background: white;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0;
+      margin-bottom: 40px;
+    }
+    .methods-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .method-item {
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .method-item strong { display: block; margin-bottom: 4px; color: var(--primary-dark); }
+    .method-item span { font-size: 0.85rem; color: var(--text-muted); }
+
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
@@ -224,7 +249,7 @@
     }
     .footer-links a:hover { color: var(--primary); }
 
-    /* Policy Modals / Legal Sections */
+    /* Policy Modals */
     .legal-modal {
       display: none;
       position: fixed;
@@ -276,9 +301,10 @@
     <div class="container">
       <nav>
         <a href="#" class="logo">
-          <span>🕌</span> Saffah
+          <span>📖</span> Saffah
         </a>
         <div class="nav-links">
+          <a href="#methods">Calculation Methods</a>
           <a href="#features">Features</a>
           <a href="#privacy">Privacy</a>
           <a href="#terms">Terms</a>
@@ -290,51 +316,77 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="badge">Pure, Ad-Free Prayer Companion</div>
-      <h1>Quiet, Accurate & Focused Prayer Times</h1>
-      <p>Astronomical calculations, auto-updating mosque Jamaat offsets, full-screen notification wakeups, and cloud sync built for Android.</p>
+      <div class="badge">Pure, Ad-Free Islamic Companion</div>
+      <h1>Precise Prayer Timetables & The Holy Quran</h1>
+      <p>Calculated via leading international standards including Karachi University, full Iftar schedules, and an integrated Holy Quran with audio recitations.</p>
 
-      <!-- App Mockup UI -->
+      <!-- Prayer Timetable Mockup -->
       <div class="preview-card">
         <div class="preview-header">
           <div class="location-pill">📍 Mumbai, Maharashtra</div>
-          <span style="font-size: 0.8rem; font-weight: 700; color: #16a34a; background: #dcfce7; padding: 3px 8px; border-radius: 6px;">Hanafi / MWL</span>
+          <span style="font-size: 0.8rem; font-weight: 700; color: #0f766e; background: #ccfbf1; padding: 3px 8px; border-radius: 6px;">Karachi / Hanafi</span>
         </div>
 
         <div class="prayer-row">
-          <span class="prayer-name">Fajr</span>
-          <div class="prayer-times">
-            <span class="prayer-start">5:12 AM</span>
-            <span class="jamat-tag">Jamaat 5:30 AM</span>
-          </div>
+          <span class="prayer-name">Fajr (Sehri Ends)</span>
+          <span class="prayer-start">5:12 AM</span>
+        </div>
+        <div class="prayer-row">
+          <span class="prayer-name">Sunrise</span>
+          <span class="prayer-start">6:27 AM</span>
         </div>
         <div class="prayer-row">
           <span class="prayer-name">Dhuhr</span>
-          <div class="prayer-times">
-            <span class="prayer-start">12:38 PM</span>
-            <span class="jamat-tag">Jamaat 1:15 PM</span>
-          </div>
+          <span class="prayer-start">12:38 PM</span>
         </div>
         <div class="prayer-row active">
           <span class="prayer-name" style="color: #15803d;">Asr (Current)</span>
-          <div class="prayer-times">
-            <span class="prayer-start" style="color: #15803d;">5:01 PM</span>
-            <span class="jamat-tag" style="color: #16a34a; font-weight: 600;">Jamaat 5:15 PM</span>
-          </div>
+          <span class="prayer-start" style="color: #15803d;">5:01 PM</span>
         </div>
-        <div class="prayer-row">
-          <span class="prayer-name">Maghrib</span>
-          <div class="prayer-times">
-            <span class="prayer-start">6:42 PM</span>
-            <span class="jamat-tag">Jamaat 6:49 PM (+7m)</span>
-          </div>
+        <div class="prayer-row iftar-highlight">
+          <span class="prayer-name" style="color: #b45309; font-weight: 700;">Maghrib / Iftar</span>
+          <span class="prayer-start" style="color: #b45309;">6:42 PM</span>
         </div>
         <div class="prayer-row">
           <span class="prayer-name">Isha</span>
-          <div class="prayer-times">
-            <span class="prayer-start">7:58 PM</span>
-            <span class="jamat-tag">Jamaat 8:30 PM</span>
-          </div>
+          <span class="prayer-start">7:58 PM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculation Standards Section -->
+  <section id="methods" class="methods-section">
+    <div class="container">
+      <div class="section-title" style="margin-bottom: 24px;">
+        <h2>Comprehensive Calculation Methods</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Select from recognized Islamic astronomical standards to match your local community guidelines.</p>
+      </div>
+
+      <div class="methods-list">
+        <div class="method-item">
+          <strong>Univ. of Islamic Sciences, Karachi</strong>
+          <span>Fajr 18° / Isha 18° — Standard across India, Pakistan, Bangladesh & South Asia.</span>
+        </div>
+        <div class="method-item">
+          <strong>Muslim World League (MWL)</strong>
+          <span>Fajr 18° / Isha 17° — Widely adopted internationally and throughout Europe.</span>
+        </div>
+        <div class="method-item">
+          <strong>Umm al-Qura University, Makkah</strong>
+          <span>Fajr 18.5° / Isha 90 min interval — Official standard across Saudi Arabia.</span>
+        </div>
+        <div class="method-item">
+          <strong>Egyptian General Authority of Survey</strong>
+          <span>Fajr 19.5° / Isha 17.5° — Official standard across Egypt, Levant & parts of Africa.</span>
+        </div>
+        <div class="method-item">
+          <strong>ISNA (North America)</strong>
+          <span>Fajr 15° / Isha 15° — Tailored for higher latitudes and North American regions.</span>
+        </div>
+        <div class="method-item">
+          <strong>Institute of Geophysics, Tehran</strong>
+          <span>Fajr 17.7° / Isha 14° / Maghrib 4.5° — Standard Shia Ithna-Ashari methodology.</span>
         </div>
       </div>
     </div>
@@ -344,44 +396,44 @@
   <section id="features" class="features">
     <div class="container">
       <div class="section-title">
-        <h2>Engineered for Precision & Peace of Mind</h2>
+        <h2>Features Designed for Daily Practice</h2>
       </div>
 
       <div class="grid">
         <div class="feature-card">
-          <div class="feature-icon">⏱️</div>
-          <h3>Dynamic Mosque Jamaat</h3>
-          <p>Set a mosque Jamaat time once. Saffah calculates and shifts dynamic offsets automatically every day as twilight changes.</p>
+          <div class="feature-icon">📖</div>
+          <h3>Holy Quran with Audio</h3>
+          <p>Read the complete Quran with clear typography, verse-by-verse audio recitations from world-renowned Qaris, and local offline caching.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌅</div>
+          <h3>Iftar & Sehri Timetables</h3>
+          <p>Accurate daily fast timings with clear countdowns to Sehri end and Maghrib Iftar across both standard and Ramadan schedules.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h3>Custom Madhab Settings</h3>
+          <p>Easily switch Asr calculation methods between Hanafi (2x shadow) and Standard/Shafi'i/Hanbali/Maliki (1x shadow) rules.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🔔</div>
           <h3>Full-Screen Wakeup Alarms</h3>
-          <p>Never miss Fajr again. High-priority full-screen alerts display prayer details and play your selected Azan audio reliably over Doze mode.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">📐</div>
-          <h3>Jurisprudence Support</h3>
-          <p>Switch easily between Hanafi and Shafi'i/Hanbali/Ahl-e-Hadith calculations with trusted astronomical angle parameters (MWL, Umm al-Qura, Karachi).</p>
+          <p>Never miss Fajr again. High-priority full-screen alerts display prayer details reliably over lock screens and battery-saver modes.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">☁️</div>
-          <h3>Seamless Google Sign-In</h3>
-          <p>Authenticate with one tap via Android Credential Manager to backup and restore custom mosque lists and audio preferences securely.</p>
+          <h3>Google Sign-In Sync</h3>
+          <p>Seamlessly back up your bookmarks, last-read Quran positions, and prayer calculation settings using secure Google Authentication.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🛡️</div>
-          <h3>Privacy-First Architecture</h3>
-          <p>Your GPS coordinates stay on your device for local calculations. No ad tracking, no profiling, and no third-party data sharing.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🎧</div>
-          <h3>Cached Offline Azan Audio</h3>
-          <p>Choose high-fidelity Azan recitations (Makkah, Madinah, Al-Aqsa) that cache locally so your alerts fire even without an active data connection.</p>
+          <h3>Privacy-First Design</h3>
+          <p>All prayer angles and GPS coordinates run calculations locally on your phone. No trackers, no data sales, and zero intrusive ads.</p>
         </div>
       </div>
     </div>
@@ -404,17 +456,17 @@
     <div class="modal-content">
       <a href="#" class="close-btn">&times;</a>
       <h2>Privacy Policy</h2>
-      <p><strong>Effective Date:</strong> September 14, 2026</p>
-      <p>Saffah ("we", "our", or "the App") respects your privacy. This policy explains how we collect and use information when you use the Saffah mobile application.</p>
+      <p><strong>Effective Date:</strong> September 16, 2026</p>
+      <p>Saffah ("we", "our", or "the App") respects your privacy. This policy explains how information is handled when using the Saffah application.</p>
       
-      <h3>1. Information We Collect</h3>
+      <h3>1. Information We Access</h3>
       <ul>
-        <li><strong>Google Account Information:</strong> When signing in with Google, we access basic profile information (email address and name) solely to authenticate you and sync your preferences.</li>
-        <li><strong>Location Data:</strong> Saffah accesses device coordinates to calculate accurate local prayer timetables. All astronomical calculations occur locally on your device.</li>
+        <li><strong>Google Account Information:</strong> When signing in with Google, we access basic profile details (email address and name) solely to authenticate and sync user settings and Quran reading progress.</li>
+        <li><strong>Location Data:</strong> Device location is used locally to determine accurate astronomical coordinates for prayer calculations and Iftar schedules. Location coordinates are never sold or shared.</li>
       </ul>
 
-      <h3>2. Data Sharing</h3>
-      <p>We do not sell, rent, or trade your personal data with third parties or advertisers.</p>
+      <h3>2. Audio and Media Storage</h3>
+      <p>Quran recitations downloaded within the app are stored locally in app cache for offline access and can be cleared at any time in device settings.</p>
 
       <h3>3. Contact</h3>
       <p>If you have questions regarding this Privacy Policy, reach out to: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
@@ -426,19 +478,16 @@
     <div class="modal-content">
       <a href="#" class="close-btn">&times;</a>
       <h2>Terms of Service</h2>
-      <p><strong>Effective Date:</strong> September 14, 2026</p>
+      <p><strong>Effective Date:</strong> September 16, 2026</p>
       <p>By using the Saffah mobile application, you agree to these Terms of Service.</p>
       
       <h3>1. Use of Service</h3>
-      <p>Saffah is provided as a prayer calculation and scheduling utility. You agree to use the service in compliance with all applicable laws and regulations.</p>
+      <p>Saffah is provided as an Islamic prayer timetable, Iftar scheduling, and Quran recitation utility. You agree to use the service in compliance with all applicable laws.</p>
 
       <h3>2. Disclaimer of Warranties</h3>
-      <p>The app is provided on an "AS IS" and "AS AVAILABLE" basis. While mathematical algorithms strive for high precision, we do not guarantee uninterrupted background execution on all device battery-saver configurations.</p>
+      <p>The app is provided on an "AS IS" and "AS AVAILABLE" basis. While mathematical algorithms strive for high astronomical precision, we advise verifying timing according to local verified announcements where applicable.</p>
 
-      <h3>3. Account Security</h3>
-      <p>You are responsible for keeping your Google account credentials secure. You can revoke authentication access at any time through your Google Security Settings.</p>
-
-      <h3>4. Contact</h3>
+      <h3>3. Contact</h3>
       <p>For inquiries, please contact: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
     </div>
   </div>
