@@ -1,5 +1,803 @@
-<!-- Team Section -->
-  <section id="team" class="container" style="padding: 20px 0 60px;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saffah — Nearby Mosque Jamaat Times, Prayer Timetables & Holy Quran</title>
+  <meta name="description" content="Find nearby mosque Jamaat congregational times, accurate astronomical prayer calculations, Iftar schedules, and Holy Quran with audio recitations." />
+
+  <!-- Favicon / App Icon -->
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --accent: #14b8a6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-sub: #f8fafc;
+      --border: #e2e8f0;
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      --section-alt: #ffffff;
+      --volunteer-bg: #f1f5f9;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    }
+
+    [data-theme="dark"] {
+      --primary: #14b8a6;
+      --primary-dark: #0d9488;
+      --primary-light: rgba(20, 184, 166, 0.15);
+      --accent: #2dd4bf;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --bg: #090d16;
+      --card-bg: #131b2e;
+      --card-sub: #1a243b;
+      --border: #222f49;
+      --nav-bg: rgba(9, 13, 22, 0.92);
+      --section-alt: #0d1322;
+      --volunteer-bg: #0f172a;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--border);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-img {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      display: block;
+    }
+
+    /* Desktop Navigation Links & CTA */
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-left: 24px;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary);
+      color: #ffffff !important;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      margin-left: 20px;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; }
+
+    /* Unified Theme Toggle Styles */
+    .theme-toggle {
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+    }
+    .theme-toggle .sun-icon { display: none; }
+    .theme-toggle .moon-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+
+    /* Desktop Theme Toggle Placement */
+    .desktop-theme-btn {
+      margin-left: 20px;
+    }
+
+    /* Mobile Controls */
+    .mobile-actions {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-main);
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-menu-btn svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2.9rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+    .hero h1 span {
+      color: var(--primary);
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+
+    /* Timetable Preview Card */
+    .preview-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      max-width: 480px;
+      margin: 0 auto 70px;
+      padding: 24px;
+      text-align: left;
+    }
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mosque-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+    .location-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .tag-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    .prayer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      background: var(--card-sub);
+      border: 1px solid transparent;
+    }
+    .prayer-row.active {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.4);
+    }
+    .prayer-name { font-weight: 600; font-size: 0.95rem; }
+    .prayer-start-sub { font-size: 0.78rem; color: var(--text-muted); display: block; }
+    .jamat-box { text-align: right; }
+    .jamat-time { font-weight: 800; font-size: 1rem; color: var(--primary); }
+    .jamat-badge { font-size: 0.72rem; color: #16a34a; font-weight: 600; display: block; }
+
+    /* Highlights Banner */
+    .highlight-card {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin-bottom: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      text-align: left;
+    }
+    .highlight-content h2 { font-size: 1.8rem; margin-bottom: 12px; }
+    .highlight-content p { color: #ccfbf1; font-size: 1rem; max-width: 580px; }
+    .highlight-pill {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Calculation Methods Section */
+    .methods-section {
+      background: var(--section-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0;
+      margin-bottom: 60px;
+    }
+    .methods-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .method-item {
+      padding: 16px;
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .method-item strong { display: block; margin-bottom: 4px; color: var(--primary); }
+    .method-item span { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Features Grid */
+    .features {
+      padding: 20px 0 60px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Team Section Styles */
+    .team-section {
+      padding: 30px 0 60px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .team-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .member-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      border: 2px solid var(--border);
+    }
+    .team-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .member-role {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .team-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Non-Profit & Volunteer Section */
+    .volunteer-section {
+      background: var(--volunteer-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 50px 30px;
+      margin: 20px auto 80px;
+      text-align: center;
+    }
+    .volunteer-box {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .volunteer-form {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      border: 1px solid var(--border);
+      margin-top: 28px;
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      background: var(--card-sub);
+      color: var(--text-main);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-submit:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 48px 0;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-left: 20px;
+    }
+    .footer-links a:hover { color: var(--primary); }
+
+    /* Policy Modals */
+    .legal-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .legal-modal:target { display: flex; }
+    .modal-content {
+      background: var(--card-bg);
+      max-width: 680px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 36px;
+      border-radius: var(--radius-lg);
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .modal-content h2 { margin-bottom: 12px; font-size: 1.6rem; color: var(--text-main); }
+    .modal-content h3 { margin-top: 20px; margin-bottom: 8px; font-size: 1.1rem; }
+    .modal-content p, .modal-content ul { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .modal-content ul { padding-left: 20px; }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .desktop-theme-btn {
+        display: none;
+      }
+      .mobile-actions {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--nav-bg);
+        flex-direction: column;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+      }
+      .nav-links.active { display: flex; }
+      .nav-links a {
+        margin: 0;
+        padding: 12px 0;
+        width: 100%;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-cta {
+        margin: 12px 0 0 !important;
+        text-align: center;
+      }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1.05rem; }
+      .highlight-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+      .footer-content { flex-direction: column; text-align: center; }
+      .footer-links { margin-top: 16px; }
+      .footer-links a { margin: 0 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <img src="logo.png" alt="Saffah Logo" class="brand-img" />
+          <span>Saffah</span>
+        </a>
+
+        <!-- Mobile Controls (Visible only on phone screens) -->
+        <div class="mobile-actions">
+          <button class="theme-toggle mobile-theme-btn" aria-label="Toggle Theme">
+            <svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+          
+          <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Navigation Items + Desktop Theme Button -->
+        <div class="nav-links">
+          <a href="#nearby-jamat">Nearby Jamaat</a>
+          <a href="#methods">Methods</a>
+          <a href="#features">Features</a>
+          <a href="#team">Team</a>
+          <a href="#volunteer" class="nav-cta">Join as Volunteer</a>
+
+          <button class="theme-toggle desktop-theme-btn" aria-label="Toggle Theme">
+            <svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">Non-Profit & Community-Driven</div>
+      <h1>Real-Time <span>Nearby Mosque Jamaat</span> & Daily Timetables</h1>
+      <p>Never miss congregational prayer again. Discover verified Jamaat schedules of mosques around you, supported by astronomical prayer timetables and the Holy Quran.</p>
+
+      <!-- Timetable Preview Card -->
+      <div id="nearby-jamat" class="preview-card">
+        <div class="preview-header">
+          <div>
+            <div class="mosque-title">🕌 Jama Masjid (Nearby)</div>
+            <div class="location-sub">0.4 km away • Hanafi / Karachi</div>
+          </div>
+          <span class="tag-pill">Verified Jamaat</span>
+        </div>
+
+        <div class="prayer-row">
+          <div>
+            <span class="prayer-name">Fajr</span>
+            <span class="prayer-start-sub">Start: 5:12 AM</span>
+          </div>
+          <div class="jamat-box">
+            <span class="jamat-time">5:35 AM</span>
+            <span class="jamat-badge">Jamaat</span>
+          </div>
+        </div>
+
+        <div class="prayer-row">
+          <div>
+            <span class="prayer-name">Dhuhr</span>
+            <span class="prayer-start-sub">Start: 12:38 PM</span>
+          </div>
+          <div class="jamat-box">
+            <span class="jamat-time">1:15 PM</span>
+            <span class="jamat-badge">Fixed Daily</span>
+          </div>
+        </div>
+
+        <div class="prayer-row active">
+          <div>
+            <span class="prayer-name" style="color: #16a34a;">Asr (Current)</span>
+            <span class="prayer-start-sub">Start: 5:01 PM</span>
+          </div>
+          <div class="jamat-box">
+            <span class="jamat-time" style="color: #16a34a;">5:15 PM</span>
+            <span class="jamat-badge">Jamaat in 14m</span>
+          </div>
+        </div>
+
+        <div class="prayer-row">
+          <div>
+            <span class="prayer-name">Maghrib (Iftar)</span>
+            <span class="prayer-start-sub">Start: 6:42 PM</span>
+          </div>
+          <div class="jamat-box">
+            <span class="jamat-time">6:49 PM</span>
+            <span class="jamat-badge">Auto +7m Offset</span>
+          </div>
+        </div>
+
+        <div class="prayer-row">
+          <div>
+            <span class="prayer-name">Isha</span>
+            <span class="prayer-start-sub">Start: 7:58 PM</span>
+          </div>
+          <div class="jamat-box">
+            <span class="jamat-time">8:30 PM</span>
+            <span class="jamat-badge">Fixed Daily</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlight Banner -->
+      <div class="highlight-card">
+        <div class="highlight-content">
+          <h2>Dynamic Mosque Jamaat Intelligence</h2>
+          <p>Unlike standard prayer apps that only show start times, Saffah solves the local masjid gap: it calculates and synchronizes dynamic Jamaat offsets automatically every morning as astronomical twilight shifts.</p>
+        </div>
+        <div class="highlight-pill">Live Local Synchronization</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculation Standards Section -->
+  <section id="methods" class="methods-section">
+    <div class="container">
+      <div class="section-title" style="margin-bottom: 24px;">
+        <h2>Comprehensive Calculation Methods</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Supports recognized Islamic astronomical standards to match your local community guidelines.</p>
+      </div>
+
+      <div class="methods-list">
+        <div class="method-item">
+          <strong>Univ. of Islamic Sciences, Karachi</strong>
+          <span>Fajr 18° / Isha 18° — Widely followed across India, Pakistan, and South Asia.</span>
+        </div>
+        <div class="method-item">
+          <strong>Muslim World League (MWL)</strong>
+          <span>Fajr 18° / Isha 17° — Standard internationally and across Europe.</span>
+        </div>
+        <div class="method-item">
+          <strong>Umm al-Qura University, Makkah</strong>
+          <span>Fajr 18.5° / Isha 90 min interval — Official standard across Saudi Arabia.</span>
+        </div>
+        <div class="method-item">
+          <strong>Egyptian General Authority of Survey</strong>
+          <span>Fajr 19.5° / Isha 17.5° — Official standard across Egypt, Levant, and Africa.</span>
+        </div>
+        <div class="method-item">
+          <strong>ISNA (North America)</strong>
+          <span>Fajr 15° / Isha 15° — Tailored for higher latitudes and North American regions.</span>
+        </div>
+        <div class="method-item">
+          <strong>Institute of Geophysics, Tehran</strong>
+          <span>Fajr 17.7° / Isha 14° / Maghrib 4.5° — Standard Shia Ithna-Ashari methodology.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Everything Built for Precision & Community</h2>
+      </div>
+
+      <div class="grid">
+        <div class="feature-card">
+          <div class="feature-icon">🕌</div>
+          <h3>Nearby Mosque Jamaat Times</h3>
+          <p>Find nearby mosques around your current location and stay up to date with their exact congregational prayer timetables.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Holy Quran with Audio</h3>
+          <p>Read the complete Quran with clear typography, verse-by-verse audio recitations from renowned Qaris, and offline caching.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌅</div>
+          <h3>Iftar & Sehri Timetables</h3>
+          <p>Accurate fast timings with clear countdowns to Sehri end and Maghrib Iftar across regular and Ramadan schedules.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h3>Madhab & Calculation Control</h3>
+          <p>Seamlessly adjust Asr between Hanafi and Standard/Shafi'i/Hanbali/Ahl-e-Hadith with recognized angle standards.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Full-Screen Wakeup Alarms</h3>
+          <p>High-priority alerts display prayer details and trigger reliably over lock screens and battery-saver modes for Fajr.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Ad-Free & Privacy Centric</h3>
+          <p>A purely non-profit application without disruptive banner ads, commercial tracking, or selling of personal location data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="container team-section">
     <div class="section-title">
       <div class="badge" style="margin-bottom: 12px;">People Behind Saffah</div>
       <h2>The Team Building for the Ummah</h2>
@@ -50,3 +848,154 @@
       </div>
     </div>
   </section>
+
+  <!-- Volunteer & Mission Section -->
+  <section id="volunteer" class="container">
+    <div class="volunteer-section">
+      <div class="volunteer-box">
+        <div class="badge">Non-Profit Mission</div>
+        <h2>Help Us Map Every Mosque Around the World</h2>
+        <p style="color: var(--text-muted); margin-top: 10px;">
+          Saffah is an independent, non-profit community project built to ensure no one misses a Jamaat prayer due to unknown timings. We need dedicated volunteers across cities and towns to help add, verify, and update their local mosque Jamaat schedules.
+        </p>
+
+        <!-- Volunteer Application Form -->
+        <div class="volunteer-form">
+          <h3 style="margin-bottom: 18px; font-size: 1.15rem; color: var(--text-main);">Become a Saffah Volunteer</h3>
+          
+          <form onsubmit="handleVolunteerSubmit(event)">
+            <div class="form-group">
+              <label for="vol-name">Your Full Name</label>
+              <input type="text" id="vol-name" placeholder="e.g. Zishan Khan" required />
+            </div>
+
+            <div class="form-group">
+              <label for="vol-location">City & Country</label>
+              <input type="text" id="vol-location" placeholder="e.g. Mumbai, India" required />
+            </div>
+
+            <div class="form-group">
+              <label for="vol-masjids">Mosques You Can Help Update / Verify</label>
+              <textarea id="vol-masjids" rows="3" placeholder="Names or areas of masjids near you..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Volunteer Application</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; 2026 Saffah. Non-Profit Community Initiative.</p>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="mailto:iamzishank@gmail.com">Contact Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy" class="legal-modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Privacy Policy</h2>
+      <p><strong>Effective Date:</strong> September 16, 2026</p>
+      <p>Saffah ("we", "our", or "the App") respects your privacy. This policy explains how information is handled when using the Saffah application.</p>
+      
+      <h3>1. Information We Access</h3>
+      <ul>
+        <li><strong>Google Account Information:</strong> When signing in with Google, we access basic profile details (email address and name) solely to authenticate and sync user settings, mosque contributions, and reading progress.</li>
+        <li><strong>Location Data:</strong> Device location is used locally to show nearby mosques and compute accurate astronomical coordinates. Location coordinates are never sold or rented.</li>
+      </ul>
+
+      <h3>2. Community Contributions</h3>
+      <p>Mosque Jamaat timetables submitted by volunteers are verified and made publicly visible within the app for community benefit.</p>
+
+      <h3>3. Contact</h3>
+      <p>If you have questions regarding this Privacy Policy, reach out to: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="terms" class="legal-modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Terms of Service</h2>
+      <p><strong>Effective Date:</strong> September 16, 2026</p>
+      <p>By using the Saffah mobile application, you agree to these Terms of Service.</p>
+      
+      <h3>1. Non-Profit Community Utility</h3>
+      <p>Saffah is provided as a non-profit utility for prayer calculation, Jamaat timing discovery, and Quran recitation. You agree to use the service respectfully and in compliance with all applicable laws.</p>
+
+      <h3>2. Accuracy & Verification</h3>
+      <p>While dynamic offsets and calculations strive for precision, we advise confirming timings with local mosque administrative announcements when in doubt.</p>
+
+      <h3>3. Contact</h3>
+      <p>For inquiries, please contact: <a href="mailto:iamzishank@gmail.com">iamzishank@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // Theme Switcher Logic (Desktop + Mobile synchronization)
+    const themeButtons = document.querySelectorAll('.theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const currentTheme = localStorage.getItem('saffah_theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+    if (currentTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('saffah_theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('saffah_theme', 'dark');
+        }
+      });
+    });
+
+    // Mobile Navigation Drawer Toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Volunteer Form Mailto Trigger
+    function handleVolunteerSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('vol-name').value;
+      const location = document.getElementById('vol-location').value;
+      const masjids = document.getElementById('vol-masjids').value;
+
+      const subject = encodeURIComponent(`Saffah Volunteer Application - ${name} (${location})`);
+      const body = encodeURIComponent(
+        `Hi Zishan,\n\nI would like to volunteer for the Saffah non-profit project.\n\n` +
+        `Name: ${name}\n` +
+        `Location: ${location}\n` +
+        `Mosques I can help collect/verify:\n${masjids}\n\n` +
+        `Looking forward to helping the community!`
+      );
+
+      window.location.href = `mailto:iamzishank@gmail.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+
+</body>
+</html>
